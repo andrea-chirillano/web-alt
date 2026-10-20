@@ -1,27 +1,9 @@
-import { useState } from 'react'
 import { useProgress } from '@react-three/drei'
 import { PALETTE } from '../config'
 import { useStore } from '../store'
 import TimeControls from './TimeControls'
 import { formatHour } from './formatHour'
 import { button, panel } from './styles'
-
-function Credits({ onClose }) {
-  return (
-    <div style={{ ...panel, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: 420 }}>
-      <h3 style={{ margin: '0 0 8px', color: PALETTE.mustard }}>Créditos</h3>
-      <p style={{ margin: '0 0 8px' }}>
-        Personaje: «FEMALE» por staxegolo (Sketchfab), licencia CC-BY 4.0.{' '}
-        <a style={{ color: PALETTE.mustard }} href="https://sketchfab.com/3d-models/female-9a0c634d1a2249d18afbbaecf6305706" target="_blank" rel="noreferrer">
-          Fuente
-        </a>
-        . Modificado (esqueleto, escala y color).
-      </p>
-      <p style={{ margin: '0 0 12px' }}>Animaciones: Mixamo (Adobe).</p>
-      <button style={button} onClick={onClose}>Cerrar</button>
-    </div>
-  )
-}
 
 function Loader() {
   const { active, progress } = useProgress()
@@ -34,7 +16,6 @@ function Loader() {
 }
 
 export default function Hud() {
-  const [creditsOpen, setCreditsOpen] = useState(false)
   const showHud = useStore((s) => s.showHud)
   const showTime = useStore((s) => s.showTime)
   const helpVisible = useStore((s) => s.helpVisible)
@@ -59,7 +40,6 @@ export default function Hud() {
             </div>
             <div style={{ display: 'flex', gap: 6 }}>
               <button style={button} onClick={respawn}>Volver al inicio</button>
-              <button style={button} onClick={() => setCreditsOpen(true)}>Créditos</button>
             </div>
             {showStats && renderStats && (
               <span style={{ fontSize: 12 }}>{renderStats.calls} draw calls · {renderStats.triangles} tris</span>
@@ -77,7 +57,6 @@ export default function Hud() {
             </div>
           )}
           {showTime && <TimeControls />}
-          {creditsOpen && <Credits onClose={() => setCreditsOpen(false)} />}
         </>
       )}
     </div>
